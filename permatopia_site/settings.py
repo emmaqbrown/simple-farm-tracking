@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-_hib^w!pns-=ea+l3k0e=nv##_9mj)_ij0&bgs5x13k(r4=s7+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['https://simple-farm-tracking-5b0965f19d6e.herokuapp.com/','127.0.0.1:8000/']
 
 
 # Application definition
@@ -55,6 +55,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django_htmx.middleware.HtmxMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 ROOT_URLCONF = 'permatopia_site.urls'
@@ -124,6 +125,8 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
+STATIC_ROOT = BASE_DIR / "staticfiles"
+
 
 STATIC_URL = 'static/'
 
@@ -149,4 +152,14 @@ BOOTSTRAP_DATEPICKER_PLUS = {
             "format": "DD/MM/YYYY",
         },
     }
+}
+
+
+# whitenoise
+
+STORAGES = {
+    # ...
+    "staticfiles": {
+        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+    },
 }
