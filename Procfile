@@ -1,2 +1,2 @@
-release: python manage.py migrate
-web: gunicorn simple-farm-tracking.wsgi
+web gunicorn simple-farm-tracking.wsgi
+
