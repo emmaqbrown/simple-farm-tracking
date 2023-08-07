@@ -3,6 +3,11 @@ from .models_task import Task
 from .models_crop_plan import CropPlan
 from .widgets import DatePickerInput
 
+
+# form -> name change to, task name
+
+# delte task
+
 class TaskForm(ModelForm):
     class Meta:
         model = Task
@@ -16,6 +21,10 @@ class TaskForm(ModelForm):
             "intended_amount_harvested",
             "notes",
             "completed"]
+
+        labels = {
+            "name": ("Task Name"),
+        }
 
         widgets = {
             'due_date' : DatePickerInput()
@@ -35,6 +44,10 @@ class TaskEditForm(ModelForm):
             "actual_amount_harvested",
             "notes",
             "completed"]
+
+        labels = {
+            "name": ("Task Name"),
+        }
 
         widgets = {
             'due_date' : DatePickerInput()

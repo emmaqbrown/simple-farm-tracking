@@ -67,7 +67,14 @@
         <thead>
             <tr>
                 <th scope="row" class="w-25">Crop Plan</th>
-                <td><a href="{% url 'cropplans-detail' task.cropplan.id %}">{{task.cropplan}}</a></td>
+                
+                <td>
+                    {% if task.cropplan %} 
+                    <a href="{% url 'cropplans-detail' task.cropplan.id %}">{{task.cropplan}}</a>
+                {% else %}
+                    -
+                {% endif %}
+                </td>
             </tr>
         </thead>
     </table>
