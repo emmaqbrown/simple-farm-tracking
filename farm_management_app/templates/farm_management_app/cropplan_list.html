@@ -1,0 +1,58 @@
+{% extends 'farm_management_app/base.html' %}
+
+
+{% block content %}
+
+{% load render_table from django_tables2 %}
+
+
+<h1>Crop Plans</h1>
+
+<button class="btn-custom mb-3">
+  <a href="{% url 'cropplans-new' %}">new crop plan button </a>
+</button>
+
+<div class="table-responsive mb-3 w-100">
+
+
+    <table class="table table-bordered table-hover">
+        <thead class="table-light"">
+          <tr>
+            <th scope="col" >Crop Plan</th>
+            <th scope="col">Planting Method</th>
+            <th scope="col">Status</th>
+            <th scope="col">Date of Pre-seeding</th>
+            <th scope="col">Location</th>
+            <th scope="col">Next Event</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for cropplan in cropplan_list %}
+
+          <tr>
+            <td><a href="{% url 'cropplans-detail' cropplan.id %}">{{cropplan}}</a></td>
+            <td>{{cropplan.get_planting_method_display}}</td>
+            <td>{{cropplan.get_current_status_display}}</td>
+            <td>{{cropplan.date_of_preseeding}}</td>
+            <td>{{cropplan.location}}</td>
+
+            <td>
+              {% if cropplan.get_next_task %} 
+                {{ cropplan.get_next_task.get_task_type_display}} | {{cropplan.get_next_task.due_date}}
+              {% else %}
+                -
+              {% endif %}
+              
+              
+            </td>
+          </tr>
+          {% endfor %}
+
+        </tbody>
+    </table>
+    
+ 
+
+</div>
+
+{% endblock %}

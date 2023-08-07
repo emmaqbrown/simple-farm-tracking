@@ -1,0 +1,38 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-light"">
+          <tr>
+            <th scope="col">Crop Plan</th>
+            <th scope="col">Date of Planting</th>
+            <th scope="col">Date of Bed Preparation</th>
+
+            <th scope="col">Date of Preseeding</th>
+            <th scope="col">Harvest Range</th>
+            <th scope="col">status</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for cropplan in cropplans_list %}
+
+        <tr>
+
+            <th scope="row"><a href="{% url 'cropplans-detail' cropplan.id %}">{{cropplan}}</a></th>
+            <td>{{cropplan.date_of_planting}}</td>
+            
+            <td>{{cropplan.date_of_bed_preparation}}</td>
+            <td>
+                {% if cropplan.date_of_preseeding %}
+                    {{cropplan.date_of_preseeding}}
+                {% else %}
+                    -
+                {% endif %}
+            </td>
+            <td>{{cropplan.harvest_range_start_date}} - {{cropplan.harvest_range_end_date}}</td>
+            <td>{{cropplan.get_current_status_display}}</td>
+        
+        </tr>
+        {% endfor %}
+        </tbody>
+    
+    </table>
+</div>

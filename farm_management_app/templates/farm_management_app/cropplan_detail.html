@@ -1,0 +1,180 @@
+{% extends 'farm_management_app/base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<h1 class="mb-1">Crop Plan: {{cropplan.cultivar.species.common_name}}</h1>
+<h4 class="mb-3">{{cropplan.cultivar}}, {{cropplan.product_name}}</h4>
+<a href="{% url 'cropplans-edit' cropplan.id %}"><button type="submit" class="btn-custom mb-3">Edit Crop Plan</button></a>
+
+
+
+<div class="row">
+    <div class="col"> 
+
+        <h3 id="status">Status</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="w-25">Planting Method</th>
+                        <td>{{cropplan.get_planting_method_display}}</td>
+        
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">Status</th>
+                    <td>{{cropplan.get_current_status_display}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Number of Plants</th>
+                    <td>{{cropplan.num_plants}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Abandoned</th>
+                    <td>
+                        {% if bed.abandoned %} 
+                            &#10004;
+                        {% else %}
+                            &#10006;
+                        {% endif %}
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Abandoned Date</th>
+                    <td>{{cropplan.abandonded_date}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Abandoned Reason</th>
+                    <td>{{cropplan.abandonded_reason}}</td>
+                </tr>
+                </tbody>
+            </table>
+            
+        </div>
+ 
+        <h3 id="dates">Dates</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th class="w-25">Date of Planting</th>
+                        <td>{{cropplan.date_of_planting}}</td>
+        
+                    </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th scope="row">date_of_preseeding</th>
+                    <td>{{cropplan.date_of_preseeding}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Harvest Range</th>
+                    <td>LOOK AT THIS{{cropplan.harvest_range_start_date}} - {{cropplan.harvest_range_end_date}}</td>
+                </tr>        
+                </tbody>
+    
+            </table>
+        </div>
+
+        <h3 id="location">Location</h3>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <tr>
+                    <th class="w-25">Location</th>
+                    <td>{{cropplan.location}}</td>    
+                </tr>
+                <tbody>
+                <tr>
+                    <th scope="row">beds</th>
+                    <td>
+                        {% for bed in cropplan.beds.all %}
+                            <li><a href="{% url 'bed' bed.name %}">{{bed}}</a></li>
+                        {% endfor %}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+            
+        </div>
+
+        <h3 id="tasks">Tasks</h3>
+        {% include "farm_management_app/task_table.html" with task_list=cropplan.task_set.all %}
+
+        <h3 id="plant-details">Plant Details</h3>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <tbody>
+                <tr>
+                    <th scope="row">Plant Family</th>
+                    <td>{{cropplan.cultivar.species.plant_family}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Species</th>
+                    <td>{{cropplan.cultivar.species}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">plating_distance_cm</th>
+                    <td>{{cropplan.plating_distance_cm}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">temperture_germination</th>
+                    <td>{{cropplan.cultivar.species.temperture_germination}}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Photo</th>
+                    <td>
+                        <img src="{% static 'farm_management_app/images/cultivar.jpg' %}" style="width:25%">
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3 id="notes">Notes</h3>
+        {% if cropplan.notes %}
+            {{cropplan.notes}}
+        {% else %}
+            <i>None</i>
+        {% endif %}
+    </div>
+    <div class="col-3 ">
+        <ul class="nav flex-column side-nav sticky-top align-items-end">
+            <li class="nav-item">
+              <a class="nav-link" href="#status" >Status</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#dates" >Dates</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#location">Location</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#tasks">Tasks</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#plant-details">Plant-Details</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#notes">Notes</a>
+            </li>
+          </ul>
+    </div>
+</div>
+
+
+
+<div class="row align-items-start">
+   
+    <div class="col">
+
+    </div>
+    
+</div>
+
+
+
+{% endblock %}

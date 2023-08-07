@@ -1,0 +1,36 @@
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="table-light"">
+          <tr>
+            <th scope="col">Task</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Task Type</th>
+            <th scope="col">Notes</th>
+            <th scope="col">Completed</th>
+          </tr>
+        </thead>
+        <tbody>
+        {% for task in task_list %}
+
+        <tr>
+
+            <th scope="row"><a href="{% url 'task-detail' task.id %}">{{task}}</a></th>
+            <td>{{task.due_date}}</td>
+            
+            <td>{{task.get_task_type_display}}</td>
+            <td>{{task.notes}}</td>
+
+            <td>
+                {% if task.completed %} 
+                    &#9989; 
+                {% else %}
+                    &#10006;
+                {% endif %}
+            </td>
+        
+        </tr>
+        {% endfor %}
+        </tbody>
+    
+    </table>
+</div>

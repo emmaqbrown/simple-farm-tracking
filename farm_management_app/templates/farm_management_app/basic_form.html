@@ -1,0 +1,20 @@
+{% extends 'farm_management_app/base.html' %}
+
+{% block content %}
+
+
+
+{% load crispy_forms_tags %}
+
+<div class="">
+    <h1>{{title}}</h1>
+
+    <form method="post" class="my-class">
+        {% csrf_token %}
+
+        {{ form|crispy }}
+        <input type="submit" value="Submit">
+
+    </form>
+</div>
+{% endblock %}

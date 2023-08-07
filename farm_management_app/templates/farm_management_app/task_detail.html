@@ -1,0 +1,116 @@
+{% extends 'farm_management_app/base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+
+<h1 class="mb-3 task">Task</h1>
+<h2>{{task.get_task_type_display}} - {{task}}</h2>
+
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+             <th class="w-25">Due Date</th>
+             <td>{{task.due_date}}</td>
+
+            </tr>
+            <tr>
+                <th scope="row">Completed</th>
+                <td>
+                    {% if task.completed %} 
+                        &#9989; 
+                    {% else %}
+                        &#10006;
+                    {% endif %}
+                </td>
+            </tr>
+        </thead>
+        <tbody>   
+        
+        <tr>
+            <th scope="row">Notes</th>
+            <td>{{task.notes}}</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="row" class="w-25">Location</th>
+                <td>{{task.location}}</td>
+
+            </tr>
+            <tr>
+                <th scope="row">Beds</th>
+                    <td>
+                    {% if task.beds.all %} 
+                        {% for bed in task.beds.all %}
+                            <li><a href="{% url 'bed' bed.name %}">{{bed}}</a></li>
+                        {% endfor %}
+                        {% else %}
+                            -
+                        {% endif %}
+                    </td>
+                </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="row" class="w-25">Crop Plan</th>
+                <td><a href="{% url 'cropplans-detail' task.cropplan.id %}">{{task.cropplan}}</a></td>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead>    
+            <tr>
+                <th scope="row" class="w-25">Intended Amount to Harvest</th>
+                <td>{{task.intended_amount_harvested}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Actual Amount Harvested</th>
+                <td>{{task.actual_amount_harvested}}</td>
+            </tr>
+        </thead>
+    </table>
+</div>
+
+
+
+
+
+<button class="btn-custom"><a href="{% url 'task-complete' task.id %}">Toggle Complete</a></button>
+
+<button class="btn-custom"><a href="{% url 'task-edit' task.id %}">Edit Task </a></button>
+
+
+{% endblock %}
+
+
+custom harvest task form 
+- only enter notes and actual amount harvested 
+
+
+
+users 
+- view, no edit   (can just hide button)
+
+harveter 
+- see and edit harvest tasks  (can just hide button)
+
+farmer
+- everything (anders & jessica)
+

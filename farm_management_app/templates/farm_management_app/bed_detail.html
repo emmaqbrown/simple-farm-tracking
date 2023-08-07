@@ -1,0 +1,41 @@
+{% extends 'farm_management_app/base.html' %}
+
+{% block content %}
+
+<h1>Bed: {{bed.name}}</h1>
+<ul class="mb-3">
+<li>{{bed.location}}</li>
+{% if bed.location.bed_length_meters and bed.location.bed_width_centimeters %}
+    <li>{{bed.location.bed_length_meters}}m X {{bed.location.bed_width_centimeters}}cm</li>
+{% endif %}
+{% if bed.notes %}
+    <li><i>{{bed.notes}}</i></li>
+{% endif %}
+<li>Active: 
+{% if bed.active %}
+    &#10004;
+{% else %}
+    &#10006;
+{% endif %}
+
+<i><a href="{% url 'bed-active' bed.name %}">(Toggle Active)</a> </i></li>
+
+
+<h2 class="mt-3">Tasks put to side</h2>
+
+{% include "farm_management_app/task_table.html" with task_list=tasks %}
+
+
+<h2>Current/Upcoming</h2>
+{% include "farm_management_app/bed_detail_cropplan.html" with cropplans_list=cropplans_current_upcoming %}
+
+    
+<h2>History</h2>
+
+
+{% include "farm_management_app/bed_detail_cropplan.html" with cropplans_list=cropplans_historical %}
+
+
+{% endblock %}
+
+

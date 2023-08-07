@@ -1,0 +1,38 @@
+{# product/templates/product_table_htmx.html #}
+
+{% extends 'farm_management_app/base.html' %}
+
+{% load render_table from django_tables2 %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+ 
+
+frontend page for harvestable 
+- group by location and hide other locations (button)
+
+ADD CROP PLAN TABLE and page - sorting of date, species, family, etc 
+- also group by location and hide other locations
+
+
+{% block content %}
+
+    <form method="get">
+        <div class="row align-items-center">
+        <div class="col">
+            <h1>Crop Plans</h1>
+        </div>
+       
+
+    </div>
+
+    </form>
+    <button class="btn-custom mb-3">
+        <a href="{% url 'cropplans-new' %}">new crop plan button </a>
+      </button>
+   
+
+    {# The actual table #}
+    {% render_table table %}
+
+
+{% endblock %}

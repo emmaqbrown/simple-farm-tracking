@@ -1,0 +1,123 @@
+{# product/templates/product_table_htmx.html #}
+
+{% extends 'farm_management_app/base.html' %}
+
+{% load render_table from django_tables2 %}
+{% load i18n %}
+{% load crispy_forms_tags %}
+ 
+
+
+{% block content %}
+
+    <form method="get">
+        <div class="row align-items-center">
+        <div class="col-md-4">
+            <h1>Tasks</h1>
+        </div>
+        <div class="col-md-4 offset-md-4 ">
+            
+            <a class="new-task " href="{% url 'task-new' %}">
+               New Task
+            </a>
+        </div>
+        </div>
+
+
+        <div class="row align-items-center ">
+
+        <div class="col">
+
+        <label class="form-label">Location:</label>
+        <select class="form-select form-select-sm mb-3 " name="location" >
+        <option value="" selected>All</option>
+
+        {% for location in locations %}
+          {% if request.GET.location == location.name %}
+            <option value="{{location.name}}" selected>{{location}}</option>
+          {% else%}
+            <option value="{{location.name}}" >{{location}}</option>
+
+          {% endif %}
+        {% endfor %}
+
+        </select>
+        </div>
+        
+        <div class="col">
+
+            <label class="form-label">Task Type:</label>
+            <select class="form-select form-select-sm mb-3 " name="task_type" >
+            <option value="" selected>All</option>
+
+            {% for task in task_types %}
+            {% if request.GET.task_type == task %}
+                <option value="{{task.0}}" selected>{{task}}</option>
+            {% else%}
+                <option value="{{task.0}}" >{{task}}</option>
+
+            {% endif %}
+            {% endfor %}
+
+            </select>
+        </div>
+        <div class="col">
+            <label class="form-label">Completed:</label>
+            <select class="form-select form-select-sm mb-3 " name="completed" >
+            <option value="" selected>All</option>
+
+
+            {% for option, label in completed_options.items %}
+            {% if request.GET.completed == option %}
+                <option value={{option}} selected>{{label}}</option>
+            {% else %}
+                <option value={{option}} >{{label}}</option>
+
+            {% endif %}
+
+            {% endfor %}
+
+            </select>
+        </div>
+
+        <div class="col">  
+            <label class="form-label">Date Start:</label>
+            {% if request.GET.date_start %}
+
+                <input id="date_start" class="form-control"  type="date" name="date_start" value="{{request.GET.date_start}}"/>
+            {% else %}
+                <input id="date_start" class="form-control"  type="date" name="date_start" value=""/>
+
+            {% endif %}
+
+        </div>
+
+        <div class="col">  
+            <label class="form-label">Date End:</label>
+            {% if request.GET.date_end %}
+
+                <input id="date_end" class="form-control"  type="date" name="date_end" value="{{request.GET.date_end}}"/>
+            {% else %}
+                <input id="date_end" class="form-control"  type="date" name="date_end" value=""/>
+
+            {% endif %}
+        </div>
+
+       
+
+        <div class="col">
+
+            <button type="submit" class="btn btn-custom">Filter</button>
+        </div>
+
+    </div>
+
+    </form>
+
+   
+
+    {# The actual table #}
+    {% render_table table %}
+
+
+{% endblock %}
