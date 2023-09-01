@@ -13,4 +13,4 @@ psycopg2-binary==2.9.7 ; python_version >= "3.9" and python_version < "4.0"
 sqlparse==0.4.4 ; python_version >= "3.9" and python_version < "4.0"
 typing-extensions==4.7.1 ; python_version >= "3.9" and python_version < "4.0"
 tzdata==2023.3 ; python_version >= "3.9" and python_version < "4.0" and sys_platform == "win32"
-whitenoise==6.5.0 ; python_version >= "3.9" and python_version < "4.0" ; dj-database-url >= 2.1.0
+whitenoise==6.5.0 ; python_version >= "3.9" and python_version < "4.0"
