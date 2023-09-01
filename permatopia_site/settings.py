@@ -93,7 +93,6 @@ DATABASES = {
 
 import dj_database_url
 db_from_env = dj_database_url.config(
-    default='postgres://rectrzxzhdswtc:6aaa1204071a7b3d2566da0a953fa4aabcb8d6e7a40bf01495943376268bf0d5@ec2-52-215-68-14.eu-west-1.compute.amazonaws.com:5432/de4jreh8k39fqt',
     conn_max_age=600,
     conn_health_checks=True,
     )
