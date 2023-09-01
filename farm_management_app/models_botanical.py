@@ -46,9 +46,9 @@ class Species(models.Model):
 class Cultivar(models.Model):
     species = models.ForeignKey(Species, on_delete=models.CASCADE, default='')
 
-    name = models.CharField(max_length=60, default='')
-    varietal_name = models.CharField(max_length=60, blank= True, default='')
-    seed_supplier = models.CharField(max_length=60, blank= True)
+    name = models.CharField(max_length=100, default='')
+    varietal_name = models.CharField(max_length=100, blank= True, default='')
+    seed_supplier = models.CharField(max_length=100, blank= True)
 
     plating_distance_cm = models.DecimalField(max_digits=5, decimal_places=2, null=True, blank=True)
 

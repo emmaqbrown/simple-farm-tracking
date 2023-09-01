@@ -28,6 +28,18 @@ def index(request):
 
     return render(request, template)
 
+def location_detail_view(request, location_slug):
+    # print(location_name)
+    location = get_object_or_404(Location, slug=location_slug)
+  
+    template = "farm_management_app/location_detail.html"
+
+    context = {
+        "location": location,
+    }
+
+
+    return render(request, template, context)
 
 def location_view(request):
     location_list = Location.objects.all()
@@ -218,10 +230,6 @@ def task_detail_view(request, pk):
     return render(request, template, context)
 
 def task_edit_view(request, pk):
-
-    # compelte pre-seeding -> cropplna to 'seedling house'
-    # complete direct seeding or transplating -> crop plan to 'in bed'
-
     # look at bed picking system for location 
 
     task = get_object_or_404(Task, id=pk)
@@ -252,6 +260,15 @@ def task_complete(request, pk):
         task.completed = False
     else:
         task.completed = True
+
+        if task.task_type == 'P':
+            task.cropplan.current_status = 'S'
+            task.cropplan.save()
+
+        elif task.task_type == 'D' or task.task_type == 'T':
+            task.cropplan.current_status = 'B'
+            task.cropplan.save()
+
     task.save()
 
     return HttpResponseRedirect(reverse_lazy('task-detail', args=[pk]))

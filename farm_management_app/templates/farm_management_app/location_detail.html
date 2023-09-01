@@ -4,12 +4,12 @@
 {% load render_table from django_tables2 %}
 
 
-{% for location, beds in location_bed_dict.items %}
+{{location}}
 
 
 list of each location - click into see table
 
-<h1 class="table-header"><a href="{% url 'locations-detail' location.slug %}">{{location}}</a></h1>
+<h1 class="table-header">{{location}}</h1>
 
     {% if location.bed_length_meters and location.bed_width_centimeters %}
       <li>Bed Length x Bed Width: {{location.bed_length_meters}}m X {{location.bed_width_centimeters}}cm</li>
@@ -96,42 +96,7 @@ list of each location - click into see table
 </table>
 
 </div>
-{% endfor %}
 
-<h1 class="location">Seedling House</h1>
 
-<div class="table-responsive mb-3">
-  <table class="table table-bordered table-hover">
-      <thead class="table-light"">
-        <tr>
-          <th scope="col" >Crop Plan</th>
-          <th scope="col">Status</th>  
-          <th scope="col">Date of Pre-seeding</th>  
-          <th scope="col">Next Event</th>
-
-        </tr>
-      </thead>
-      <tbody>
-        {% for cropplan in seedling_house_cropplans %}
-        <tr>
-          <td><a href="{% url 'cropplans-detail' cropplan.id %}">{{cropplan}}</a></td>
-          <td>{{cropplan.get_current_status_display}}</td>
-          <td>{{cropplan.date_of_preseeding}}</td>
-          <td>
-            {% if cropplan.get_next_task %} 
-              {{ cropplan.get_next_task.get_task_type_display}} | {{cropplan.get_next_task.due_date}}
-            {% else %}
-              -
-            {% endif %}
-            
-            
-          </td>
-        </tr>
-        {% endfor %}
-        
-      </tbody>
-  </table>
-  
-  </div>
 
 {% endblock %}

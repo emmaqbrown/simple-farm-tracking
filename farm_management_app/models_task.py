@@ -14,7 +14,7 @@ class Task(models.Model):
         ('B', 'bed preparation'),
         ('T', 'transplant'),
         ('H', 'harvest'),
-        ('T', 'terminate'),
+        ('E', 'terminate'),
         ('O', 'other'),
     ]
 

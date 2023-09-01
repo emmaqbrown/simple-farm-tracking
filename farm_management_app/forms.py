@@ -26,6 +26,15 @@ class TaskForm(ModelForm):
             "name": ("Task Name"),
         }
 
+        help_texts = {
+            "location": ("not requied"),
+            "beds": ("not requied"),
+            "cropplan": ("not requied"),
+            "intended_amount_harvested": ("not requied"),
+            "notes": ("not requied"),
+
+        }
+
         widgets = {
             'due_date' : DatePickerInput()
         }
@@ -47,6 +56,15 @@ class TaskEditForm(ModelForm):
 
         labels = {
             "name": ("Task Name"),
+        }
+
+        help_texts = {
+            "location": ("not requied"),
+            "beds": ("not requied"),
+            "cropplan": ("not requied"),
+            "intended_amount_harvested": ("not requied"),
+            "notes": ("not requied"),
+
         }
 
         widgets = {

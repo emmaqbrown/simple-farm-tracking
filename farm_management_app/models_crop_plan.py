@@ -121,8 +121,8 @@ class CropPlan(models.Model):
             ],
             ('T', 'transplanting'):[
                 {
-                    'type': 'B',
-                    'due_date': self.date_of_bed_preparation
+                    'type': 'P',
+                    'due_date': self.date_of_preseeding
                 },
                 {
                     'type': 'T',
@@ -131,7 +131,7 @@ class CropPlan(models.Model):
             ]
         }
 
-        exisiting_tasks = Task.objects.all().filter(cropplan__id=self.id).filter(completed=False).filter(auto_created=True)
+        exisiting_tasks = Task.objects.all().filter(cropplan__id=self.id).filter(auto_created=True)
 
         if not exisiting_tasks:
             for planting_method, task_list in auto_task_dictionary.items():
