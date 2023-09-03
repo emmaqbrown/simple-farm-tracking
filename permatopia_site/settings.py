@@ -84,10 +84,21 @@ WSGI_APPLICATION = 'permatopia_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME':ec2-52-215-68-14.eu-west-1.compute.amazonaws.com',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'de4jreh8k39fqt',
+        'USER': 'rectrzxzhdswtc',
+        'PASSWORD': '6aaa1204071a7b3d2566da0a953fa4aabcb8d6e7a40bf01495943376268bf0d5',
+        'HOST': 'ec2-52-215-68-14.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432'
     }
 }
 
