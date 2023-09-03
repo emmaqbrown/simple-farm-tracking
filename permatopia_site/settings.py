@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'permatopia_site.wsgi.application'
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME':ec2-52-215-68-14.eu-west-1.compute.amazonaws.com',
+#         'NAME': 'ec2-52-215-68-14.eu-west-1.compute.amazonaws.com',
 #     }
 # }
 
@@ -102,12 +102,12 @@ DATABASES = {
     }
 }
 
-import dj_database_url
-db_from_env = dj_database_url.config(
-    conn_max_age=600,
-    conn_health_checks=True,
-    )
-DATABASES['default'].update(db_from_env)
+# import dj_database_url
+# db_from_env = dj_database_url.config(
+#     conn_max_age=600,
+#     conn_health_checks=True,
+#     )
+# DATABASES['default'].update(db_from_env)
 
 
 # Password validation
