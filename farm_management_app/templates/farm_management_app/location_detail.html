@@ -4,31 +4,68 @@
 {% load render_table from django_tables2 %}
 
 
-{{location}}
-
-
-list of each location - click into see table
 
 <h1 class="table-header">{{location}}</h1>
 
-    {% if location.bed_length_meters and location.bed_width_centimeters %}
-      <li>Bed Length x Bed Width: {{location.bed_length_meters}}m X {{location.bed_width_centimeters}}cm</li>
-    {% endif %}
+{% if is_seedling_house %}
 
-    {% if location.bed_area_meters_squared%}
-      <li>Bed Area: {{location.bed_area_meters_squared}}m<sup>2</sup></li>
-    {% endif %}
 
-    {% if location.notes %}
-      <li><i>{{location.notes}}</i></li>
-    {% endif %}
+<div class="table-responsive mb-3">
+  <table class="table table-bordered table-hover">
+      <thead class="table-light"">
+        <tr>
+          <th scope="col" >Crop Plan</th>
+          <th scope="col">Status</th>  
+          <th scope="col">Date of Pre-seeding</th>  
+          <th scope="col">Next Event</th>
 
-    <form action="{% url 'tasks' %}" method="GET">
-      <li> 
-      <button type="submit" class="btn btn-li" name="location" value="{{location.name}}">Tasks</button>  </li> 
-    </form>
- 
+        </tr>
+      </thead>
+      <tbody>
+        {% for cropplan in seedling_house_cropplans %}
+        <tr>
+          <td><a href="{% url 'cropplans-detail' cropplan.id %}">{{cropplan}}</a></td>
+          <td>{{cropplan.get_current_status_display}}</td>
+          <td>{{cropplan.date_of_preseeding}}</td>
+          <td>
+            {% if cropplan.get_next_task %} 
+              {{ cropplan.get_next_task.get_task_type_display}} | {{cropplan.get_next_task.due_date}}
+            {% else %}
+              -
+            {% endif %}
+            
+            
+          </td>
+        </tr>
+        {% endfor %}
+        
+      </tbody>
+  </table>
   
+  </div>
+
+
+
+{% else %}
+
+{% if location.bed_length_meters and location.bed_width_centimeters %}
+<li>Bed Length x Bed Width: {{location.bed_length_meters}}m X {{location.bed_width_centimeters}}cm</li>
+{% endif %}
+
+{% if location.bed_area_meters_squared%}
+<li>Bed Area: {{location.bed_area_meters_squared}}m<sup>2</sup></li>
+{% endif %}
+
+{% if location.notes %}
+<li><i>{{location.notes}}</i></li>
+{% endif %}
+
+<form action="{% url 'tasks' %}" method="GET">
+<li> 
+<button type="submit" class="btn btn-li" name="location" value="{{location.name}}">Tasks</button>  </li> 
+</form>
+
+
 
 
 
@@ -37,66 +74,67 @@ list of each location - click into see table
 
 <div class="table-responsive mb-3">
 <table class="table table-bordered table-hover">
-    <thead class="table-light"">
-      <tr>
-        <th scope="col" >Bed</th>
-        <th scope="col">Area m<sup>2</sup></th>
-        <th scope="col">Crop Plan</th>
-        <th scope="col">Status</th>
-        <th scope="col">Active</th>
-        <th scope="col">Next Event</th>
-      </tr>
-    </thead>
-    <tbody>
+<thead class="table-light"">
+<tr>
+  <th scope="col" >Bed</th>
+  <th scope="col">Area m<sup>2</sup></th>
+  <th scope="col">Crop Plan</th>
+  <th scope="col">Status</th>
+  <th scope="col">Active</th>
+  <th scope="col">Next Event</th>
+</tr>
+</thead>
+<tbody>
 
-    {% for bed in beds %}
+{% for bed in beds %}
 
-      <tr>
-        <th scope="row"><a href="{% url 'bed' bed.name %}">{{bed}}</a></th>
-        <td>{{bed.area_meters_squared}}</td>
-        
+<tr>
+  <th scope="row"><a href="{% url 'bed' bed.name %}">{{bed}}</a></th>
+  <td>{{bed.area_meters_squared}}</td>
+  
 
-       
-        {% if bed.cropplan_set.all.exists %}    
-        <td><a href="{% url 'cropplans-detail' bed.cropplan_set.all.0.id %}">{{bed.cropplan_set.all.0}}</a>  </td>
-            {% else %}
-            <td>—</td>
-        {% endif %}
+ 
+  {% if bed.cropplan_set.all.exists %}    
+  <td><a href="{% url 'cropplans-detail' bed.cropplan_set.all.0.id %}">{{bed.cropplan_set.all.0}}</a>  </td>
+      {% else %}
+      <td>—</td>
+  {% endif %}
 
 
-        
-        <td>
-            {% if bed.cropplan_set.all.0.current_status %}    
-                {{bed.cropplan_set.all.0.get_current_status_display}}
-            {% else %}
-            —
-            {% endif %}
-            
-        </td>
-        <td>
-            {% if bed.active %} 
-                &#9989; 
-             {% else %}
-                &#10006;
-            {% endif %}
-        </td>
-
-        <td>
-          {% if bed.cropplan_set.all.0.get_next_task %} 
-            {{ bed.cropplan_set.all.0.get_next_task.get_task_type_display}} | {{bed.cropplan_set.all.0.get_next_task.due_date}}
-          {% else %}
-            -
-          {% endif %}
-          
-        </td>
-      </tr>
+  
+  <td>
+      {% if bed.cropplan_set.all.0.current_status %}    
+          {{bed.cropplan_set.all.0.get_current_status_display}}
+      {% else %}
+      —
+      {% endif %}
       
-    </tbody>
-    {% endfor %}
+  </td>
+  <td>
+      {% if bed.active %} 
+          &#9989; 
+       {% else %}
+          &#10006;
+      {% endif %}
+  </td>
+
+  <td>
+    {% if bed.cropplan_set.all.0.get_next_task %} 
+      {{ bed.cropplan_set.all.0.get_next_task.get_task_type_display}} | {{bed.cropplan_set.all.0.get_next_task.due_date}}
+    {% else %}
+      -
+    {% endif %}
+    
+  </td>
+</tr>
+
+</tbody>
+{% endfor %}
 </table>
 
 </div>
 
 
+{% endif %}
 
 {% endblock %}

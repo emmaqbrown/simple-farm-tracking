@@ -30,16 +30,24 @@ def index(request):
 
 def location_detail_view(request, location_slug):
     # print(location_name)
-    location = get_object_or_404(Location, slug=location_slug)
+    if location_slug == 'seedling_house':
+        print('house')
+        location = 'Seedling House'
+        is_seedling_house = True
+    else:
+        location = get_object_or_404(Location, slug=location_slug)
+        is_seedling_house = False
   
     template = "farm_management_app/location_detail.html"
 
     context = {
         "location": location,
+        "is_seedling_house": is_seedling_house
     }
 
 
     return render(request, template, context)
+
 
 def location_view(request):
     location_list = Location.objects.all()
