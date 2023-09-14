@@ -15,12 +15,17 @@
         <div class="col-md-4">
             <h1>Tasks</h1>
         </div>
+
+        {% if user.can_edit %}
+
         <div class="col-md-4 offset-md-4 ">
             
             <a class="new-task " href="{% url 'task-new' %}">
                New Task
             </a>
         </div>
+
+        {% endif %}
         </div>
 
 

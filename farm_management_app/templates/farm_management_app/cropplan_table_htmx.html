@@ -14,6 +14,7 @@ ADD CROP PLAN TABLE and page - sorting of date, species, family, etc
 - also group by location and hide other locations
 
 
+
 {% block content %}
 
     <form method="get">
@@ -25,11 +26,18 @@ ADD CROP PLAN TABLE and page - sorting of date, species, family, etc
 
     </div>
 
+
+    {% if user.can_edit %}
+
+
+
     </form>
     <button class="btn-custom mb-3">
         <a href="{% url 'cropplans-new' %}">New Crop Plan</a>
       </button>
-   
+      
+    {% endif %}
+
 
     {# The actual table #}
     {% render_table table %}

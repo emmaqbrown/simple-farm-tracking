@@ -1,8 +1,10 @@
 from django.forms import ModelForm
+from django.contrib.auth.forms import UserCreationForm
+
 from .models_task import Task
 from .models_crop_plan import CropPlan
 from .widgets import DatePickerInput
-
+from .models_user import User
 
 # form -> name change to, task name
 
@@ -105,3 +107,15 @@ class CropPlanForm(ModelForm):
             'harvest_range_start_date' : DatePickerInput(),
             'harvest_range_end_date' : DatePickerInput(),
         }
+
+
+class SignUpForm(UserCreationForm):
+    # username = forms.CharField(required=True)
+    class Meta:
+        model = User
+        fields = (
+            'username',
+            'password1', 
+            'password2', 
+            'role' )
+        ...

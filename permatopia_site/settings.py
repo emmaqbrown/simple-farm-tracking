@@ -215,3 +215,8 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+
+# users
+
+AUTH_USER_MODEL = 'farm_management_app.User'

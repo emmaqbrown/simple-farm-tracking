@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect, HttpResponseRedirect
 from django.http import HttpResponse
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, CreateView
 from .models_location import Location, Bed
 from .models_crop_plan import CropPlan
 from .models_botanical import Cultivar
@@ -12,10 +12,12 @@ from .tables import BedTable,  TaskTableHtmx, CropPlanTableHtmx
 from django_filters.views import FilterView
 from .filters import TaskFilter, CropPlanFilter
 from django.urls import reverse_lazy
-from .forms import TaskForm, TaskEditForm, CropPlanForm
+from .forms import TaskForm, TaskEditForm, CropPlanForm, SignUpForm
 import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import authenticate, login
 
 # new cropplan - order by species common name 
 
@@ -306,3 +308,20 @@ def new_task(request):
     elif request.method == 'GET':
         return render(request, template, context)
 
+
+
+class SignUpView(CreateView):
+    form_class = SignUpForm
+    success_url = reverse_lazy("index")
+    template_name = "registration/signup.html"
+
+    def form_valid(self, form):
+        username = form.cleaned_data['username']
+        password = form.cleaned_data['password1']
+        form.save()
+        user = authenticate(username=username, password=password)
+    
+        if user is not None:
+            if user.is_active:
+                login(self.request,user)
+                return HttpResponseRedirect(reverse_lazy('index'))

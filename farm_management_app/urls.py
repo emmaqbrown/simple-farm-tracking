@@ -16,7 +16,7 @@ urlpatterns = [
     path('tasks/<int:pk>/complete', views.task_complete, name='task-complete'),
     path('tasks/new', views.new_task, name='task-new'),
     path('cropplans/', views.CropPlanTableHtmx.as_view(), name='cropplans'),
-
+    path('signup/', views.SignUpView.as_view(), name='signup'),
 
 ]
 
