@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+import secrets
+
 import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,12 +23,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-_hib^w!pns-=ea+l3k0e=nv##_9mj)_ij0&bgs5x13k(r4=s7+'
+SECRET_KEY = os.environ.get(
+    "DJANGO_SECRET_KEY",
+    default=secrets.token_urlsafe(nbytes=64),
+)
+# SECRET_KEY = 'django-insecure-_hib^w!pns-=ea+l3k0e=nv##_9mj)_ij0&bgs5x13k(r4=s7+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ['https://simple-farm-tracking-5b0965f19d6e.herokuapp.com/','*']
+
+IS_HEROKU_APP = "DYNO" in os.environ and not "CI" in os.environ
 
 
 # Application definition
@@ -84,6 +92,32 @@ WSGI_APPLICATION = 'permatopia_site.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+if IS_HEROKU_APP:
+    # In production on Heroku the database configuration is derived from the `DATABASE_URL`
+    # environment variable by the dj-database-url package. `DATABASE_URL` will be set
+    # automatically by Heroku when a database addon is attached to your Heroku app. See:
+    # https://devcenter.heroku.com/articles/provisioning-heroku-postgres
+    # https://github.com/jazzband/dj-database-url
+    DATABASES = {
+        "default": dj_database_url.config(
+            conn_max_age=600,
+            conn_health_checks=True,
+            ssl_require=True,
+        ),
+    }
+else:
+    # When running locally in development or in CI, a sqlite database file will be used instead
+    # to simplify initial setup. Longer term it's recommended to use Postgres locally too.
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+
+# Database
+# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
+
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -91,16 +125,16 @@ WSGI_APPLICATION = 'permatopia_site.wsgi.application'
 #     }
 # }
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'de4jreh8k39fqt',
-        'USER': 'rectrzxzhdswtc',
-        'PASSWORD': '6aaa1204071a7b3d2566da0a953fa4aabcb8d6e7a40bf01495943376268bf0d5',
-        'HOST': 'ec2-52-215-68-14.eu-west-1.compute.amazonaws.com',
-        'PORT': '5432'
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': 'de4jreh8k39fqt',
+#         'USER': 'rectrzxzhdswtc',
+#         'PASSWORD': '6aaa1204071a7b3d2566da0a953fa4aabcb8d6e7a40bf01495943376268bf0d5',
+#         'HOST': 'ec2-52-215-68-14.eu-west-1.compute.amazonaws.com',
+#         'PORT': '5432'
+#     }
+# }
 
 # import dj_database_url
 # db_from_env = dj_database_url.config(

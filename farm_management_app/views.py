@@ -14,6 +14,8 @@ from .filters import TaskFilter, CropPlanFilter
 from django.urls import reverse_lazy
 from .forms import TaskForm, TaskEditForm, CropPlanForm
 import datetime
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.decorators import login_required
 
 # new cropplan - order by species common name 
 
@@ -28,6 +30,7 @@ def index(request):
 
     return render(request, template)
 
+@login_required(login_url='index')
 def location_detail_view(request, location_slug):
     # print(location_name)
     if location_slug == 'seedling_house':
