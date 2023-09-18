@@ -22,15 +22,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
+
+SECRET_KEY = os.environ['SECRET_KEY']
+
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get(
-    "DJANGO_SECRET_KEY",
-    default=secrets.token_urlsafe(nbytes=64),
-)
+# SECRET_KEY = os.environ.get(
+#     "DJANGO_SECRET_KEY",
+#     default=secrets.token_urlsafe(nbytes=64),
+# )
 # SECRET_KEY = 'django-insecure-_hib^w!pns-=ea+l3k0e=nv##_9mj)_ij0&bgs5x13k(r4=s7+'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['https://simple-farm-tracking-5b0965f19d6e.herokuapp.com/','*']
 
@@ -75,9 +78,10 @@ TEMPLATES = [
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
+                'django.contrib.auth.context_processors.auth',
+
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 "django.template.context_processors.request",
                 'farm_management_app.contextprocessor.curr_year',
@@ -220,3 +224,4 @@ STORAGES = {
 # users
 
 AUTH_USER_MODEL = 'farm_management_app.User'
+# AUTHENTICATION_BACKENDS = ['farm_management_app.User.UserBackend']
