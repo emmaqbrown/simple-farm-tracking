@@ -2,6 +2,9 @@
 
 {% block content %}
 
+{% load static %}
+
+<script src="{% static 'farm_management_app/js/cropplan.js' %}"></script>
 
 
 {% load crispy_forms_tags %}
@@ -9,7 +12,7 @@
 <div class="">
     <h1>{{title}}</h1>
 
-    <form method="post" class="my-class">
+    <form method="post" class="my-class" oninput="checkChange()">
         {% csrf_token %}
 
         {{ form|crispy }}
@@ -17,4 +20,6 @@
 
     </form>
 </div>
+
+
 {% endblock %}

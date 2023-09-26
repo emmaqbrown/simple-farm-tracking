@@ -109,7 +109,7 @@ def cropplan_list(request):
 
 def cropplan_new(request):
  
-    template = "farm_management_app/basic_form.html"
+    template = "farm_management_app/cropplan_basic_form.html"
     form = CropPlanForm(request.POST or None)
 
     context = {
@@ -118,7 +118,9 @@ def cropplan_new(request):
             'form': form
         }
 
-    if request.method == 'POST':
+    if request.method == 'POST' and request.is_ajax():
+        print(request.is_ajax())
+
         if form.is_valid():
             form_cleaned = form.cleaned_data
             form.save()
@@ -128,6 +130,12 @@ def cropplan_new(request):
 
     elif request.method == 'GET':
         return render(request, template, context)
+
+def cropplan_get_beds(request):
+    location_id = request.GET.get('location')
+    beds = Bed.objects.filter(location=location_id).order_by('name')
+
+    return render(request, 'farm_management_app/cropplan_beds_dropdown_list_options.html', {'beds': beds})
 
 def cropplan_detail_view(request, pk):
     cropplan = get_object_or_404(CropPlan, id=pk)

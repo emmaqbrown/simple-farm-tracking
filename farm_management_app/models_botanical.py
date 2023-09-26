@@ -1,6 +1,7 @@
 from django.db import models
 from .models_location import Bed
 from django.utils.text import slugify
+from django.contrib import admin
 
 class PlantFamily(models.Model):
     botanical_name = models.CharField(max_length=60, default='')
@@ -27,6 +28,8 @@ class Species(models.Model):
         ('B', 'biannual'),
         ('P', 'perennial'),
     ]
+
+    
     
     plant_type = models.CharField(max_length=1, choices=PLANT_TYPE_CHOICES)
 
@@ -42,6 +45,10 @@ class Species(models.Model):
     def save(self, *args, **kwargs):
         self.slug = slugify(self.botanical_name)
         super(Species, self).save(*args, **kwargs)
+
+    @admin.display(ordering="plant_family")
+    def plant_family_display(self):
+        return f"{self.plant_family}"
 
 class Cultivar(models.Model):
     species = models.ForeignKey(Species, on_delete=models.CASCADE, default='')

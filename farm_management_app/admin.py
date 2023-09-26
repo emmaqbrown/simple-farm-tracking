@@ -5,8 +5,28 @@ from .models_crop_plan import CropPlan
 from .models_task import Task
 from .models_user import User
 from django.contrib.auth.admin import UserAdmin
+from django import forms
+
 
 admin.site.register(PlantFamily)
+
+
+# class SpeciesForm(forms.ModelForm):
+#     plant_family = forms.ModelChoiceField(queryset=PlantFamily.objects.order_by('botanical_name'))
+
+#     class Meta:
+#         model = Species
+
+# class SpeciesAdmin(admin.ModelAdmin):
+    # plant_family_ordering = "botanical_name"
+    # ordering = [""]
+    # fields = ["plant_family_display"]
+    # list_display = ('plant_family')
+    # form = SpeciesForm
+
+    # ordering = ["plant_type"]
+
+
 admin.site.register(Species)
 admin.site.register(Cultivar)
 

@@ -104,7 +104,8 @@ class CropPlan(models.Model):
         super(CropPlan, self).save(*args, **kwargs)
 
         if self.location and self.beds.exists():
-            area = len(self.beds.all())*self.location.bed_area_meters_squared
+            
+            area = len(self.beds.all())*self.location.bed_length_meters
             distance = float(self.plating_distance_cm)*.01
             self.num_plants = area/distance
             

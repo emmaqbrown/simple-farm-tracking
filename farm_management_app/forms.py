@@ -3,6 +3,8 @@ from django.contrib.auth.forms import UserCreationForm
 
 from .models_task import Task
 from .models_crop_plan import CropPlan
+from .models_location import Location, Bed
+
 from .widgets import DatePickerInput
 from .models_user import User
 
@@ -76,6 +78,7 @@ class TaskEditForm(ModelForm):
 class CropPlanForm(ModelForm):
     class Meta:
         model = CropPlan
+
         fields = [
             "cultivar", 
             "product_name",
@@ -107,6 +110,10 @@ class CropPlanForm(ModelForm):
             'harvest_range_start_date' : DatePickerInput(),
             'harvest_range_end_date' : DatePickerInput(),
         }
+
+    def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.fields['beds'].queryset = Bed.objects.none()
 
 
 class SignUpForm(UserCreationForm):

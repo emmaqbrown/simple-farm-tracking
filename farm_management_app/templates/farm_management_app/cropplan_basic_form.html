@@ -1,0 +1,54 @@
+{% extends 'farm_management_app/base.html' %}
+
+{% block content %}
+
+{% load static %}
+
+<!-- <script src="{% static 'farm_management_app/js/cropplan.js' %}"></script> -->
+
+
+{% load crispy_forms_tags %}
+
+<div class="">
+    <h1>{{title}}</h1>
+
+    <form method="post" class="my-class" id="cropplanForm" data-beds-url="{% url 'ajax_load_beds' %}" novalidate>
+        {% csrf_token %}
+
+        {{ form|crispy }}
+        <input type="submit" value="Submit">
+
+    </form>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+  $("#id_location").change(function () {
+    var url = $("#cropplanForm").attr("data-beds-url");  // get the url of the `load_cities` view
+    var locationId = $(this).val();  // get the selected country ID from the HTML input
+
+    console.log(locationId)
+
+    $.ajax({                       // initialize an AJAX request
+      url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
+      data: {
+        'location': locationId       // add the country id to the GET parameters
+      },
+      success: function (data) {   // `data` is the return of the `load_cities` view function
+        $("#id_beds").html(data);  // replace the contents of the city input with the data that came from the server
+        console.log('success');
+        console.log(data)
+
+      },
+      error: function(data){
+        alert('error; ' + eval(error));
+        console.log('error')
+      }
+    });
+    return false;
+  });
+})
+</script>
+
+{% endblock %}
