@@ -34,7 +34,7 @@ SECRET_KEY = os.environ['SECRET_KEY']
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-DEBUG_PROPAGATE_EXCEPTIONS = True
+# DEBUG_PROPAGATE_EXCEPTIONS = True
 
 
 ALLOWED_HOSTS = ['https://simple-farm-tracking-5b0965f19d6e.herokuapp.com/','*']
@@ -214,6 +214,10 @@ BOOTSTRAP_DATEPICKER_PLUS = {
 
 
 # whitenoise
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),
+]
+
 
 STORAGES = {
     # ...
