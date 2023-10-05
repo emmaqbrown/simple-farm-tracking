@@ -43,6 +43,8 @@ class CropPlan(models.Model):
     
     plating_distance_cm = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
+    num_rows = models.PositiveSmallIntegerField(blank=True, null=True)
+
     num_plants = models.PositiveSmallIntegerField(null=True,blank=True)
 
     amount_available_for_harvest = models.PositiveSmallIntegerField(null=True,blank=True)
@@ -102,6 +104,9 @@ class CropPlan(models.Model):
         self.date_of_bed_preparation = self.date_of_planting - datetime.timedelta(days=14)
 
         super(CropPlan, self).save(*args, **kwargs)
+
+        if self.num_rows == None and self.cropplan.num_rows != None:
+            self.num_rows = self.cropplan.num_rows   
 
         if self.location and self.beds.exists():
             

@@ -37,6 +37,8 @@ class Species(models.Model):
     sowing_depth_cm = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     temperture_germination = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
+    num_rows = models.PositiveSmallIntegerField(blank=True, null=True)
+
     slug = models.CharField(max_length=60, blank=True,default='')
 
     def __str__(self):
@@ -62,6 +64,7 @@ class Cultivar(models.Model):
     sowing_depth_cm = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     num_seeds_per_meter = models.PositiveSmallIntegerField(blank=True, null=True)
 
+    num_rows = models.PositiveSmallIntegerField(blank=True, null=True)
 
     days_seeding_to_transplatning = models.PositiveSmallIntegerField(blank=True, null=True)
 
@@ -84,6 +87,9 @@ class Cultivar(models.Model):
 
         if self.sowing_depth_cm == None:
             self.sowing_depth_cm = self.species.sowing_depth_cm
+
+        if self.num_rows == None and self.species.num_rows != None:
+            self.num_rows = self.species.num_rows   
 
         self.slug = slugify(self.name)
         super(Cultivar, self).save(*args, **kwargs)
