@@ -98,13 +98,17 @@ class CropPlan(models.Model):
         #### generate dates
 
         if self.planting_method == 'T':
-            self.date_of_preseeding = self.date_of_planting - datetime.timedelta(days=self.cultivar.days_seeding_to_transplatning)
+            if self.date_of_preseeding == None:
+                self.date_of_preseeding = self.date_of_planting - datetime.timedelta(days=self.cultivar.days_seeding_to_transplatning)
 
+        if self.harvest_range_start_date == None:
+            self.harvest_range_start_date = self.date_of_planting + datetime.timedelta(days=self.cultivar.harvest_days_to_maturity_min)
         
-        self.harvest_range_start_date = self.date_of_planting + datetime.timedelta(days=self.cultivar.harvest_days_to_maturity_min)
-        self.harvest_range_end_date = self.date_of_planting + datetime.timedelta(days=self.cultivar.harvest_days_to_maturity_max)
+        if self.harvest_range_end_date == None:
+            self.harvest_range_end_date = self.date_of_planting + datetime.timedelta(days=self.cultivar.harvest_days_to_maturity_max)
 
-        self.date_of_bed_preparation = self.date_of_planting - datetime.timedelta(days=14)
+        if self.date_of_bed_preparation == None:
+            self.date_of_bed_preparation = self.date_of_planting - datetime.timedelta(days=14)
 
         super(CropPlan, self).save(*args, **kwargs)
 
