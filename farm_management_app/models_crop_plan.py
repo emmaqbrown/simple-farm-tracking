@@ -86,9 +86,12 @@ class CropPlan(models.Model):
 
 
         #### generate fields
-       
-        self.product_name = self.cultivar.name  
-        self.plating_distance_cm = self.cultivar.plating_distance_cm
+        if self.product_name == None:
+            self.product_name = self.cultivar.name  
+
+        if self.plating_distance_cm == None:
+            self.plating_distance_cm = self.cultivar.plating_distance_cm
+
         self.slug = slugify(self.cultivar.name) + str(self.id)
 
 
@@ -97,7 +100,7 @@ class CropPlan(models.Model):
         if self.planting_method == 'T':
             self.date_of_preseeding = self.date_of_planting - datetime.timedelta(days=self.cultivar.days_seeding_to_transplatning)
 
-      
+        
         self.harvest_range_start_date = self.date_of_planting + datetime.timedelta(days=self.cultivar.harvest_days_to_maturity_min)
         self.harvest_range_end_date = self.date_of_planting + datetime.timedelta(days=self.cultivar.harvest_days_to_maturity_max)
 
