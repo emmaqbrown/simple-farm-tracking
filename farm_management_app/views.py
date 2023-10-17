@@ -117,12 +117,25 @@ def cropplan_new(request):
 
             'form': form
         }
+    is_ajax = request.META.get('HTTP_X_REQUESTED_WITH') == 'XMLHttpRequest'
+    print(is_ajax)
+    # print(request.is_ajax())
 
-    if request.method == 'POST' and request.is_ajax():
-        print(request.is_ajax())
+    if request.method == 'POST':
+        # print(request.is_ajax())
 
+        print('post')
+        # print('choices',form.fields['beds'].value)
+        print(form.errors)
+        # print(form.fields['beds'].choices)
+        # form.fields['beds'].choices = choices
+        # id_beds = request.POST.get('id_beds')
+        # print(id_beds)
+# 
         if form.is_valid():
+            print('valid')
             form_cleaned = form.cleaned_data
+            print(form_cleaned)
             form.save()
             
     
@@ -134,7 +147,7 @@ def cropplan_new(request):
 def cropplan_get_beds(request):
     location_id = request.GET.get('location')
     beds = Bed.objects.filter(location=location_id).order_by('name')
-
+    print(beds)
     return render(request, 'farm_management_app/cropplan_beds_dropdown_list_options.html', {'beds': beds})
 
 def cropplan_detail_view(request, pk):

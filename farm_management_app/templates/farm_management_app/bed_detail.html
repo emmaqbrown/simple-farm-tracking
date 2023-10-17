@@ -18,10 +18,9 @@
     &#10006;
 {% endif %}
 
-<i><a href="{% url 'bed-active' bed.name %}">(Toggle Active)</a> </i></li>
 
 
-<h2 class="mt-3">Tasks put to side</h2>
+<h2 class="mt-3">Tasks</h2>
 
 {% include "farm_management_app/task_table.html" with task_list=tasks %}
 
@@ -39,3 +38,4 @@
 {% endblock %}
 
 
+<!-- <i><a href="{% url 'bed-active' bed.name %}">(Toggle Active)</a> </i></li> -->

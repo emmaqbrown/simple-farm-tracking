@@ -73,6 +73,9 @@ class Cultivar(models.Model):
 
     active = models.BooleanField(default=True)
 
+    image_url =  models.URLField(max_length = 300, null=True) 
+
+
 
     notes  = models.TextField(blank=True)
 

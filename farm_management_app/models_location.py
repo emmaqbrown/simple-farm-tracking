@@ -27,6 +27,7 @@ class Location(models.Model):
         super(Location, self).save(*args, **kwargs)
 
 
+
 class Bed(models.Model):
     name = models.CharField(max_length=60, null=True)
 

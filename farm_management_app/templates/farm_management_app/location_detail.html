@@ -48,6 +48,7 @@
 
 {% else %}
 
+
 {% if location.bed_length_meters and location.bed_width_centimeters %}
 <li>Bed Length x Bed Width: {{location.bed_length_meters}}m X {{location.bed_width_centimeters}}cm</li>
 {% endif %}
@@ -86,7 +87,8 @@
 </thead>
 <tbody>
 
-{% for bed in beds %}
+
+{% for bed in location.bed_set.all %}
 
 <tr>
   <th scope="row"><a href="{% url 'bed' bed.name %}">{{bed}}</a></th>

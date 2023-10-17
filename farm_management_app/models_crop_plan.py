@@ -48,6 +48,7 @@ class CropPlan(models.Model):
     num_plants = models.PositiveSmallIntegerField(null=True,blank=True)
 
     amount_available_for_harvest = models.PositiveSmallIntegerField(null=True,blank=True)
+  
 
 
     abandoned = models.BooleanField(default=False)
@@ -112,7 +113,7 @@ class CropPlan(models.Model):
 
         super(CropPlan, self).save(*args, **kwargs)
 
-        if self.num_rows == None and self.cropplan.num_rows != None:
+        if self.num_rows == None and self.cultivar.num_rows != None:
             self.num_rows = self.cropplan.num_rows   
 
         if self.location and self.beds.exists():
