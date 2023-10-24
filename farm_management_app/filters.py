@@ -4,6 +4,7 @@ import django_filters
 from .models_location import Location, Bed
 from .models_task import Task
 from .models_crop_plan import CropPlan
+from .models_botanical import Species
 
 class TaskFilter(django_filters.FilterSet):
     location = django_filters.CharFilter(field_name='location__name',lookup_expr='icontains')
@@ -36,6 +37,16 @@ class CropPlanFilter(django_filters.FilterSet):
         model = CropPlan
         fields = [
             'location'
+            ]
+
+class SpeciesFilter(django_filters.FilterSet):
+    # location = django_filters.CharFilter(field_name='location__name',lookup_expr='icontains')
+
+    
+    class Meta:
+        model = Species
+        fields = [
+            'plant_family'
             ]
 
    

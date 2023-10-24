@@ -37,6 +37,9 @@ class Species(models.Model):
     sowing_depth_cm = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
     temperture_germination = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
 
+
+    days_seeding_to_transplatning = models.PositiveSmallIntegerField(blank=True, null=True)
+
     num_rows = models.PositiveSmallIntegerField(blank=True, null=True)
 
     slug = models.CharField(max_length=60, blank=True,default='')
@@ -71,6 +74,9 @@ class Cultivar(models.Model):
     harvest_days_to_maturity_min = models.PositiveSmallIntegerField()
     harvest_days_to_maturity_max = models.PositiveSmallIntegerField()
 
+
+    temperture_germination = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+
     active = models.BooleanField(default=True)
 
     image_url =  models.URLField(max_length = 300, null=True) 
@@ -93,6 +99,12 @@ class Cultivar(models.Model):
 
         if self.num_rows == None and self.species.num_rows != None:
             self.num_rows = self.species.num_rows   
+
+        if self.days_seeding_to_transplatning == None:
+            self.days_seeding_to_transplatning = self.species.days_seeding_to_transplatning
+
+        if self.temperture_germination == None:
+            self.temperture_germination = self.species.temperture_germination
 
         self.slug = slugify(self.name)
         super(Cultivar, self).save(*args, **kwargs)

@@ -92,6 +92,8 @@ class CropPlanForm(ModelForm):
             "harvest_range_start_date",
             "harvest_range_end_date",
             "plating_distance_cm",
+            "amount_available_for_harvest_kg",
+            "use_now",
             "notes",]
 
 

@@ -47,8 +47,10 @@ class CropPlan(models.Model):
 
     num_plants = models.PositiveSmallIntegerField(null=True,blank=True)
 
-    amount_available_for_harvest = models.PositiveSmallIntegerField(null=True,blank=True)
+
+    amount_available_for_harvest_kg = models.PositiveSmallIntegerField(null=True,blank=True)
   
+    use_now = models.BooleanField(default=False)
 
 
     abandoned = models.BooleanField(default=False)

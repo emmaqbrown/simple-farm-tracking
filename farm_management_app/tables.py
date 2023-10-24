@@ -4,6 +4,7 @@ from django_tables2.utils import A  # alias for Accessor
 from django_tables2.utils import Accessor
 from .models_crop_plan import CropPlan
 from .models_task import Task
+from .models_botanical import Species
 
 
 class BedTable(tables.Table):
@@ -71,6 +72,26 @@ class CropPlanTableHtmx(tables.Table):
             "current_status"
             )
         
+
+class SpeciesTableHtmx(tables.Table):
+   
+    # species = tables.LinkColumn("cropplans-detail", args=[A("id")],verbose_name="cultivar")
+
+    class Meta:
+        model = Species
+
+        template_name = "farm_management_app/htmx_table.html"
+        fields = (
+            "plant_family", 
+            "alias_botanical_name",
+            "common_name",
+            "plant_type",
+            "plating_distance_cm",
+            "sowing_depth_cm",
+            "temperture_germination",
+            "days_seeding_to_transplatning",
+            "num_rows"
+            )
 
 
 

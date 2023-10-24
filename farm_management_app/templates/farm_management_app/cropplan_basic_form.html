@@ -12,7 +12,7 @@
 <div class="">
     <h1>{{title}}</h1>
 
-    <form method="post" class="my-class" id="cropplanForm" data-beds-url="{% url 'ajax_load_beds' %}" novalidate>
+    <form method="post" class="my-class" id="cropplanForm" data-beds-url="{% url 'ajax_load_beds' %}" >
         {% csrf_token %}
 
         {{ form|crispy }}
@@ -30,15 +30,25 @@
 
     console.log(locationId)
 
-    $.ajax({                       // initialize an AJAX request
+    $.ajax({    
+                         // initialize an AJAX request
       url: url,                    // set the url of the request (= localhost:8000/hr/ajax/load-cities/)
       data: {
         'location': locationId       // add the country id to the GET parameters
-      },
+      }
+      ,
+
+
       success: function (data) {   // `data` is the return of the `load_cities` view function
+        console.log(data)
         $("#id_beds").html(data);  // replace the contents of the city input with the data that came from the server
         console.log('success');
-        console.log(data)
+        console.log('data',data)
+        let beds = document.getElementById('id_beds').options;
+        // console.log(beds.0)
+        console.log("beds",beds)
+        console.log("hello2")
+     
 
       },
       error: function(data){
