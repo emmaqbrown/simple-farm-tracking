@@ -17,8 +17,9 @@ urlpatterns = [
     path('tasks/new', views.new_task, name='task-new'),
     path('cropplans/', views.CropPlanTableHtmx.as_view(), name='cropplans'),
     path('ajax/load-beds/', views.cropplan_get_beds, name='ajax_load_beds'),  # <-- this one here
-
     path('signup/', views.SignUpView.as_view(), name='signup'),
+    path('species/', views.SpeciesTableHtmx.as_view(), name='species'),
+
 
 ]
 

@@ -3,14 +3,14 @@ from django.http import HttpResponse
 from django.views.generic import ListView, DetailView, CreateView
 from .models_location import Location, Bed
 from .models_crop_plan import CropPlan
-from .models_botanical import Cultivar
+from .models_botanical import Cultivar, Species
 from .models_task import Task
 from django.core import serializers
 from django.template import loader
 from django_tables2 import SingleTableView, SingleTableMixin, RequestConfig
-from .tables import BedTable,  TaskTableHtmx, CropPlanTableHtmx
+from .tables import BedTable,  TaskTableHtmx, CropPlanTableHtmx, SpeciesTableHtmx
 from django_filters.views import FilterView
-from .filters import TaskFilter, CropPlanFilter
+from .filters import TaskFilter, CropPlanFilter, SpeciesFilter
 from django.urls import reverse_lazy
 from .forms import TaskForm, TaskEditForm, CropPlanForm, SignUpForm
 import datetime
@@ -194,6 +194,11 @@ class CropPlanTableHtmx(SingleTableMixin, FilterView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
 
+        context["h1"] = "Crop Plans"
+        context["cp"] = True
+
+
+
         context["locations"] = Location.objects.all()
         context["task_types"] = Task.TASK_TYPE_CHOICES
         context["completed_options"] = {
@@ -210,7 +215,7 @@ class CropPlanTableHtmx(SingleTableMixin, FilterView):
         if self.request.htmx:
             template_name = "farm_management_app/task_table_partial.html"
         else:
-            template_name = "farm_management_app/cropplan_table_htmx.html"
+            template_name = "farm_management_app/basic_table_htmx.html"
 
         return template_name
 
@@ -346,3 +351,31 @@ class SignUpView(CreateView):
             if user.is_active:
                 login(self.request,user)
                 return HttpResponseRedirect(reverse_lazy('index'))
+
+
+class SpeciesTableHtmx(SingleTableMixin, FilterView):
+    table_class = SpeciesTableHtmx
+    queryset = Species.objects.all()
+
+    filterset_class = SpeciesFilter
+    paginate_by = 20
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+
+        context["h1"] = "Species"
+        context["cp"] = False
+
+
+
+        return context
+
+    def get_template_names(self):
+
+        if self.request.htmx:
+            template_name = "farm_management_app/task_table_partial.html"
+        else:
+            template_name = "farm_management_app/basic_table_htmx.html"
+
+        return template_name
