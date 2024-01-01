@@ -119,3 +119,10 @@ ul.side-nav a{
 /* .table-container table td:nth-child(3) {
     width: 50%;
 } */
+
+.active-link {
+    color: #fff; 
+    background-color: #007bff; 
+    font-weight: bold; 
+    font-size: 1.1em; 
+}
