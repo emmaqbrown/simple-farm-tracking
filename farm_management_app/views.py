@@ -381,4 +381,4 @@ class SpeciesTableHtmx(SingleTableMixin, FilterView):
         return template_name
 
     def home_view(request):
-    return render(request, 'home.html', {'active_view': 'home'})
+        return render(request, 'home.html', {'active_view': 'home'})

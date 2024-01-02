@@ -1,30 +1,43 @@
+
+
+<div>Current URL name: "{{ request.resolver_match.url_name }}"</div>
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3 p-3">
-  <a class="navbar-brand" href="{% url 'index' %}">simple farm tracking</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse " id="navbarNav">
-    <ul class="navbar-nav">
-      {% if user.is_authenticated %}
-      <li class="nav-item {% if active_view == 'locations' %}active-link{% endif %}">
-        <a class="nav-link" href="{% url 'locations' %}">Locations</a>
-      </li>
-      <li class="nav-item {% if active_view == 'species' %}active-link{% endif %}">
-        <a class="nav-link" href="{% url 'species' %}">Species</a>
-      </li>
-      <li class="nav-item {% if active_view == 'cropplans' %}active-link{% endif %}">
-        <a class="nav-link" href="{% url 'cropplans' %}">Crop Plans</a>
-      </li>
-      <li class="nav-item {% if active_view == 'tasks' %}active-link{% endif %}">
-        <form action="{% url 'tasks' %}" method="GET">
-          <button type="submit" class="btn-custom-nav" name="completed" value="False">Tasks</button>
-        </form>
-      </li>
-      <!-- Additional items can be added here in a similar fashion -->
-      {% else %}
-      <li class="nav-item nav-link"><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
-      <li class="nav-item nav-link"><a href="{% url 'signup' %}">Sign Up</a></li>
-      {% endif %}
-    </ul>
-  </div>
+    <a class="navbar-brand" href="{% url 'index' %}">simple farm tracking</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse " id="navbarNav">
+      <ul class="navbar-nav">
+        {% if user.is_authenticated %}
+
+        <li class="nav-item active align-items-center">
+          <a class="nav-link align-middle" href="{% url 'locations' %}"><span class="sr-only"></span>Locations</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'species' %}">Species</a></li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'cropplans' %}">Crop Plans</a></li>
+        </li>
+        <li class="nav-item nav-link"> 
+          <form action="{% url 'tasks' %}" method="GET">
+            
+            <button type="submit" class="btn-custom-nav " name="completed" value="False">Tasks</button>
+          </form>
+        </li>
+        <li>
+          {{curr_year | date}}
+        </li>
+          <li class="nav-item nav-link ">User: {{ user.get_username }} | {{ user.get_role_display }}</li>
+          <li class="nav-item nav-link"><a href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
+        {% else %}
+          <li class="nav-item nav-link"><a href="{% url 'login' %}?next={{ request.path }}">Login</a></li>
+          <li class="nav-item nav-link"><a href="{% url 'signup' %}"">Sign Up</a></li>
+
+        {% endif %}
+      
+      </ul>
+    </div>
 </nav>
+
+
