@@ -379,3 +379,6 @@ class SpeciesTableHtmx(SingleTableMixin, FilterView):
             template_name = "farm_management_app/basic_table_htmx.html"
 
         return template_name
+
+    def home_view(request):
+        return render(request, 'home.html', {'active_view': 'home'})

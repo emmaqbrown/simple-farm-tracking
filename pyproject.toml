@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "permatopia-farm"
+version = "0.1.0"
+description = ""
+authors = ["emma <eqbrown@isf.edu.hk>"]
+readme = "README.md"
+packages = [{include = "permatopia_farm"}]
+
+[tool.poetry.dependencies]
+python = "^3.9"
+Django = "^4.2.3"
+django-tables2 = "^2.6.0"
+django-filter = "^23.2"
+django-htmx = "^1.16.0"
+django-crispy-forms = "^2.0"
+crispy-bootstrap5 = "^0.7"
+gunicorn = "^21.2.0"
+psycopg2-binary = "^2.9.7"
+dj-database-url = "^2.0.0"
+django-on-heroku = "^1.1.2"
+whitenoise = "^6.5.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
