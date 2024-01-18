@@ -126,3 +126,8 @@ ul.side-nav a{
     font-weight: bold; 
     font-size: 1.1em; 
 }
+
+.my-class {
+    width: 650px;
+    margin-left: x00px;
+}
